@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<link rel="stylesheet" href="css/reset.css">
+<link rel='stylesheet prefetch'
+	href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900|RobotoDraft:400,100,300,500,700,900'>
+<link rel='stylesheet prefetch'
+	href='http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+<link rel="stylesheet" href="css/style.css">
+
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+
+</head>
+
+<body>
+
+	<div class="module form-module" id="class">
+		<div class="toggle2">
+			</i>
+		</div>
+
+		<div class="form">
+			<h2 class="welcome" > </h2>
+			<form id="login" action="login">
+				<select class="wanted" id="0">
+					<option value="" disabled selected>Science Class</option>
+				</select>
+				<select class="wanted" id="1">
+					<option value="" disabled selected>English Class</option>
+				</select>
+				<select class="wanted" id="2">
+					<option value="" disabled selected>Math Class</option>
+				</select>
+				<select class="wanted" id="3">
+					<option value="" disabled selected>Social Studies Class</option>
+				</select>
+				<select class="wanted" id="4">
+					<option value="" disabled selected>Art Class</option>
+				</select>
+				<select class="wanted" id="5">
+					<option value="" disabled selected>Language Class</option>
+				</select>
+				<select class="wanted" id="6">
+					<option value="" disabled selected>Physical Education Class</option>
+				</select>
+				
+				<button onclick="submitWanted();return false;">Submit</button>
+			</form>
+		</div>
+
+	</div>
+
+</body>
+
+<script type="text/javascript">
+$( document ).ready(function() {
+	
+	var id = localStorage.getItem('id');
+	
+	$.ajax({
+		type:'get',
+		url: "get=classes",
+		success: function(data) {
+			var classes = [];
+			for (var i=0;i<7;i++) {
+			     classes[i] = [];
+			}
+			
+			var c1 = 0, c2=0;
+			var mark1, mark2;
+			for(var i =0;i < data.length;i++) {
+				if(data.charAt(i) == '?') {
+					mark1 = i+1;
+					if(c2!=0) {
+						c1++;
+					}
+					c2 = 0;
+				} else if (data.charAt(i) == '&') {
+					classes[c1][c2] = data.substring(mark1,i);
+					mark1=i+1;
+					c2++;
+				}
+			}
+			
+			for(var i = 0 ;i<7;i++) {
+				for(var val in classes[i]) {
+					if(val!=0){
+						$("#"+i).append($("<option></option>").text(classes[i][val]));
+					}			
+				}
+			}
+			
+			//alert(classes[6][0]);
+		}
+	});
+	
+	$.ajax({
+		type:'get',
+		url: "name=" + id,
+		success: function(data) {
+			$(".welcome").text("Select Your Wanted Classes, " + data);
+		}
+	});
+});
+
+function submitWanted() {
+	var sub = true;
+	
+	$(".wanted").each(function() {
+		if($(this).val() == null) {
+			sub = false;
+		}
+	});
+	
+	if(sub) {
+		alert("Submitting Classes");
+		var msg = "setwanted=";
+		$(".wanted").each(function() {
+			msg+=$(this).val();
+			msg+="&";
+		});
+	
+		var id = localStorage.getItem('id');
+		msg += id + "&";
+		
+		$.ajax({
+			type:'get',
+			url: msg,
+			success: function(data) {
+				$(".welcome").text("Select Your Wanted Classes, " + data);
+			}
+		});
+		
+		//temp 
+		location.reload();
+		
+	} else {
+		alert("Please Select A Class For Every Field")
+	}
+	
+}
+
+</script>
+
+</html>
+

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <title>MAST Login</title>
+    
+    
+    <link rel="stylesheet" href="css/reset.css">
+
+    <link rel='stylesheet prefetch' href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900|RobotoDraft:400,100,300,500,700,900'>
+<link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+
+        <link rel="stylesheet" href="css/style.css">
+
+    
+    
+    
+  </head>
+
+  <body>
+
+    
+<!-- Form Mixin-->
+<!-- Input Mixin-->
+<!-- Button Mixin-->
+<!-- Pen Title-->
+<div class="pen-title">
+  <!-- <h1>Mast Academy Login</h1> -->
+	<a href="index.html">
+		<img alt="test" src="images/mastlogo.jpg">
+	</a>
+	
+</div>
+<!-- Form Module-->
+<div id = "display" ></div>
+
+<div class="module form-module" id="init">
+  <div class="toggle"><i class="fa fa-times fa-pencil"></i>
+    <div class="tooltip">Sign Up</div>
+  </div>
+  <div class="form">
+    <h2>Login to your account</h2>
+    <form id ="login" action="login">
+      <input class="l" type="number" name="id" id="signinid" placeholder="ID Number"/>
+      <input class="l" type="password" name="password" placeholder="Password"/>
+      <button onclick="loginFunction();return false;">Login</button>
+    </form>
+  </div>
+  <div class="form">
+    <h2>Create an account</h2>
+    <form id="signup" action="signup">
+      <input class="s" type="number" name="id" placeholder="ID Number"/>
+      <input class="s" type="password" name="password" placeholder="Password"/>
+      <input class="s" type="text" name="firstName" placeholder="First Name"/>
+      <input class="s" type="text" name="lastName" placeholder="Last Name"/>
+      <input class="s" type="number" name="grade" placeholder="Grade Level"/>
+      <input class="s" type="email" name="email" placeholder="Email Address"/>
+      <button onclick="signupFunction();return false;">Register</button>
+    </form>
+  </div>
+ <!-- <div class="cta"><a href="http://andytran.me">Forgot your password?</a></div>-->
+</div>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+        <script src="js/index.js"></script>
+
+    
+    
+    
+  </body>
+</html>
