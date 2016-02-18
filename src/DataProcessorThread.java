@@ -49,6 +49,89 @@ public class DataProcessorThread extends Thread {
 																	// specified
 						file = new File("resources\\website\\images\\logo.png");
 						sendFile(file, out);
+					} else if(action.request.contains("get=wantedclasses?")) {
+						
+						String id = action.request.substring(action.request.indexOf("?")+1);
+						
+						String wanted[] = mysqlHandler.getStudentStudents(id);
+						
+						String periods[][] = mysqlHandler.getPeriod();
+						
+						String msgOut[][] = new String[36][8];
+						
+						String msg = "";
+						
+						
+						int c=0;
+						for(String[] p:periods) {
+							for(String s:wanted) {
+								
+								if(p[0].equals(s)) {
+									msgOut[c] = p;
+									msg += "?" + p[0];
+									for(int i = 1; i < p.length;i++) {
+										msg+= "&" + p[i];
+									}
+									
+									c++;
+								}
+								
+							}
+						}
+						
+						msg += "?";
+						
+						out.write(("HTTP/1.1 200 OK\n\n" + msg).getBytes());
+						out.flush();
+						
+					} else if(action.request.contains("get=change?")) {
+						String id = action.request.substring(action.request.indexOf("?")+1);
+						
+						String data[] = mysqlHandler.getStudentStudents(id);
+						
+						if(data[3] == null) {
+							System.out.println("Not set!");
+							
+							out.write(("HTTP/1.1 200 OK\n\n" + "false").getBytes());
+							out.flush();
+							
+						} else {
+							
+							out.write(("HTTP/1.1 200 OK\n\n" + "true").getBytes());
+							out.flush();
+							System.out.println("Set!");
+						}
+						
+						//System.out.println("yeet: " + id);
+					} else if(action.request.contains("setChange=")) {
+						String in = action.request.replaceAll("%20", " ");
+						
+						String classes[] = new String[8];
+						int mark = 10;
+						
+						int c = 0;
+						for(int i = 0; i < in.length();i++) {
+							if(in.charAt(i) == '&') {
+								classes[c] = in.substring(mark, i);
+								mark = i+1;
+								c++;
+							}
+						}
+						
+						String inMsg[] = new String[8];
+						
+						inMsg[0] = classes[7];
+						
+						for(int i=0;i<7;i++) {
+							inMsg[i+1] = classes[i];
+							//System.out.println(classes[i]);
+						}
+						
+						mysqlHandler.setClass(inMsg);
+						
+						out.write("HTTP/1.1 200 OK\n\n".getBytes());
+						out.flush();
+						
 					} else if(action.request.contains("setwanted=")) {
 						
 						String in = action.request.replaceAll("%20", " ");
@@ -65,11 +148,14 @@ public class DataProcessorThread extends Thread {
 							}
 						}
 						
-						for(String s:classes) {
-							System.out.println(s);
-						}
+						//for(String s:classes) {
+						//	System.out.println(s);
+						//}
 						
 						mysqlHandler.setClassStudents(new String[] {classes[7],classes[2],classes[0],classes[3],classes[5],classes[4],classes[6],classes[1]});
+						
+						out.write("HTTP/1.1 200 OK\n\n".getBytes());
+						out.flush();
 						
 					}else if (action.request.equals("get=classes")) {
 						ArrayList<String> classes[] = mysqlHandler.getClasses();
@@ -149,8 +235,8 @@ public class DataProcessorThread extends Thread {
 							out.flush();
 						}
 						
-						System.out.println(id);
-						System.out.println(password);
+						//System.out.println(id);
+						//System.out.println(password);
 
 					} else if (action.request.contains("signup")) {
 

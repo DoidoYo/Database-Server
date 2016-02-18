@@ -320,6 +320,45 @@ public class mysqlHandler {
 		return null;
 	}
 	
+	static String[][] getPeriod() {
+		
+		try {
+			String msg = "SELECT * FROM periods";
+			PreparedStatement statement = connection.prepareStatement(msg);
+			ResultSet result = statement.executeQuery();
+
+			String out[][] = new String[35][8];
+
+			int x=0;
+			while (result.next()) {
+				out[x][0] = result.getString(1);
+				out[x][1] = result.getString(2);
+				out[x][2] = result.getString(3);
+				out[x][3] = result.getString(4);
+				out[x][4] = result.getString(5);
+				out[x][5] = result.getString(6);
+				out[x][6] = result.getString(7);
+				out[x][7] = result.getString(8);
+				x++;
+			}
+
+			/*
+			 * for(int i = 0; i < out.length; i++) { System.out.println(out[i]);
+			 * }
+			 */
+
+			statement.close();
+			result.close();
+
+			return out;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
 	static void close() {
 		try {
 			connection.close();
