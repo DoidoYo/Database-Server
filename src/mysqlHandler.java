@@ -16,6 +16,7 @@ public class mysqlHandler {
 	private static Connection connection;
 
 	static void init() {
+		//establish connection to mysql server
 		try {
 			connection = DriverManager
 					.getConnection("jdbc:mysql://sampleschool.ddns.net:1234/school?user=counselor&password=samplePass");
@@ -29,6 +30,7 @@ public class mysqlHandler {
 	// EMAIL=5, PERIOD_1=6, PERIOD_2=7, PERIOD_3=8, PERIOD_4=9, PERIOD_5=10,
 	// PERIOD_6=11, PERIOD_7=12;
 
+	//adds students to the login table
 	static boolean addStudentLogin(String in[]) {
 		// String msg = "insert into login (id,
 		// password,firstname,lastname,email) values (?,?,?,?,?)";
@@ -72,6 +74,7 @@ public class mysqlHandler {
 		return exists;
 	}
 
+	//adds students to the students table
 	static boolean addStudentStudents(String in[]) {
 		boolean exists = false;
 		try {
@@ -110,6 +113,7 @@ public class mysqlHandler {
 		return exists;
 	}
 
+	//sets the wanted classes of students
 	static void setClassStudents(String info[]) {
 		try {
 			String msg = "update students set math = ?, science = ?, social = ?, language = ?, art = ?, pe = ?, english = ? WHERE id = ?";
@@ -134,6 +138,7 @@ public class mysqlHandler {
 		}
 	}
 	
+	//sets changes that student wants to login page
 	static void setClass(String info[]) {
 		try {
 			String msg = "update login set pd1 = ?, pd2 = ?, pd3 = ?, pd4 = ?, pd5 = ?, pd6 = ?, pd7 = ? WHERE id = ?";
@@ -158,6 +163,7 @@ public class mysqlHandler {
 		}
 	}
 
+	//check if student with id exists
 	static boolean studentExists(String id) {
 		try {
 			String msg = "SELECT * FROM students WHERE id = ?";
@@ -186,6 +192,7 @@ public class mysqlHandler {
 		return false;
 	}
 
+	//get all classes available
 	static ArrayList[] getClasses() {
 		try {
 		String msg = "SELECT * FROM classes";
@@ -240,6 +247,7 @@ public class mysqlHandler {
 		return null;
 	}
 	
+	//gets info from login table from student with id
 	static String[] getStudentLogin(String id) {
 		try {
 			String msg = "SELECT * FROM login WHERE id = ?";
@@ -281,6 +289,7 @@ public class mysqlHandler {
 		return null;
 	}
 
+	//gets info from students table with id 
 	static String[] getStudentStudents(String id) {
 		try {
 			String msg = "SELECT * FROM students WHERE id = ?";
@@ -320,6 +329,7 @@ public class mysqlHandler {
 		return null;
 	}
 	
+	//gets all periods
 	static String[][] getPeriod() {
 		
 		try {
@@ -359,6 +369,7 @@ public class mysqlHandler {
 		return null;
 	}
 	
+	//closes connection with mysql
 	static void close() {
 		try {
 			connection.close();

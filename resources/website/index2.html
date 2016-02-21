@@ -84,6 +84,7 @@
 
 <script type="text/javascript">
 
+//init vars
 var id;
 
 var periods = [];
@@ -91,14 +92,16 @@ for (var i=0;i<8;i++) {
 	periods[i] = [];
 }
 
+//DO when html loaded
 $( document ).ready(function() {
-	
 	start();
 });
 
 function start() {
+	//get id stored in browser memory
 	id = localStorage.getItem('id');
-
+	
+	//see if first time loggin in
 	$.ajax({
 		type:'get',
 		url: "get=change?" + id,
@@ -112,6 +115,7 @@ function start() {
 	});
 }
 
+//submit change div
 function submitChange() {
 var sub = true;
 	
@@ -123,6 +127,8 @@ var sub = true;
 	
 	if(sub) {
 		//alert("Submitting Changes!");
+	
+		//encode data into string
 		var msg = "setChange=";
 		$(".change").each(function() {
 			msg+=$(this).val();
@@ -132,6 +138,7 @@ var sub = true;
 		var id = localStorage.getItem('id');
 		msg += id + "&";
 		
+		//send data
 		$.ajax({
 			type:'get',
 			url: msg,
@@ -140,7 +147,7 @@ var sub = true;
 			}
 		});
 		
-		//temp 
+		//logout (reload page) 
 		location.reload();
 		
 	} else {
@@ -148,9 +155,11 @@ var sub = true;
 	}
 }
 
+//submit wanted div
 function submitWanted() {
 	var sub = true;
 	
+	//check if every field is filled
 	$(".wanted").each(function() {
 		if($(this).val() == null) {
 			sub = false;
@@ -159,6 +168,7 @@ function submitWanted() {
 	
 	if(sub) {
 		//alert("Submitting Classes");
+		//encode data into string
 		var msg = "setwanted=";
 		$(".wanted").each(function() {
 			msg+=$(this).val();
@@ -168,10 +178,12 @@ function submitWanted() {
 		var id = localStorage.getItem('id');
 		msg += id + "&";
 		
+		//send data
 		$.ajax({
 			type:'get',
 			url: msg,
 			success: function(data) {
+				//reload 1/2 of page
 				start();
 			}
 		});
@@ -186,10 +198,13 @@ function submitWanted() {
 	
 }
 
+//change div setup
 function change() {
+	//show wanted div
 	$("#change").show();
 	$("#wanted").hide();
 	
+	//get name from id
 	$.ajax({
 		type:'get',
 		url: "name=" + id,
@@ -198,6 +213,7 @@ function change() {
 		}
 	});
 	
+	//get period and classes accordingly
 	$.ajax({
 		type:'get',
 		url: "get=wantedclasses?" + id,
@@ -223,7 +239,8 @@ function change() {
 			/*alert(data);
 			alert(periods[6][0]);
 			alert(periods[6][7]);*/
-
+	
+			//add classes to fields
 			for(var c=0;c<7;c++) {
 				for(var p=0;p<7;p++) {
 					if(periods[c][p+1] == 1) {
@@ -237,10 +254,13 @@ function change() {
 	
 }
 
+//setup wanted div
 function wanted() {
+	//show div
 	$("#change").hide();
 	$("#wanted").show();
 
+	//get name
 	$.ajax({
 		type:'get',
 		url: "name=" + id,
@@ -249,6 +269,7 @@ function wanted() {
 		}
 	});
 	
+	//get all classes available
 	$.ajax({
 		type:'get',
 		url: "get=classes",
@@ -259,7 +280,7 @@ function wanted() {
 			}
 		
 			//alert(data);
-			
+			//decode string
 			var c1 = 0, c2=0;
 			var mark1, mark2;
 			for(var i =0;i < data.length;i++) {
@@ -277,6 +298,7 @@ function wanted() {
 				}
 			}
 			
+			//add classes to text fields
 			for(var i = 0 ;i<7;i++) {
 				for(var val in classes[i]) {
 					if(val!=0){
@@ -290,15 +312,19 @@ function wanted() {
 	});
 }
 
+//called everytime a field is changed
+//makes sure onely one classes can be chosen (so you cant chose AP cal twice in two different periods)
 $(".change").on('change', function() {
 	//save selected values
 	var pVal = [];
 	
+	//saves selected data, and deletes options from all fields
 	for(var i =0;i<7;i++) {
 		pVal[i] = $("#1"+i).val();
 		$("#1"+i).empty().append('<option value="null" disabled selected>Period '+ (i+1) + '</option>');
 	}
 	
+	//adds all but selected options
 	for(var c=0;c<7;c++) {
 		for(var p=0;p<7;p++) {
 			if(periods[c][p+1] == 1) {
@@ -317,6 +343,7 @@ $(".change").on('change', function() {
 		}
 	}
 	
+	//adds selected optiona and selects them again
 	for(var i =0;i<7;i++) {
 		if(pVal[i] != null) {
 			$("#1"+i).append($("<option></option>").text(pVal[i]));

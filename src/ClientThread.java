@@ -20,6 +20,7 @@ public class ClientThread extends Thread{
 	public void run() {
 		//read client input and decide what to do
 		try {
+			//get streams from client
 			OutputStream out = client.getOutputStream();
 			InputStream in = client.getInputStream();
 			
@@ -28,6 +29,7 @@ public class ClientThread extends Thread{
 			String message = "";
 			String inputLine = "";
 			
+			//read while there is still data available
 			while((inputLine = reader.readLine()) != null) {
 				message += inputLine;
 				//System.out.println(inputLine);
@@ -43,11 +45,13 @@ public class ClientThread extends Thread{
 						
 						String request = normal.substring(get+5, http-1);
 						
+						//get only the request and add it to queue
 						queue.add(new Action(request, client));
 					}
 					
 					break;
 				} else {
+					//add server command to queue (no https overhead)
 					if(message.contains("serverStatus:")) {
 						queue.add(new Action(normal, client));
 					}
