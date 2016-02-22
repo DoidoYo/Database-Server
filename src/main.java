@@ -5,7 +5,7 @@ public class main {
 	
 	public static void main(String[] args) {
 		
-		server = new Server(8080);
+		server = new Server(80);
 		
 	}
 	

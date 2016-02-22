@@ -18,7 +18,7 @@ public class mysqlHandler {
 	static void init() {
 		try {
 			connection = DriverManager
-					.getConnection("jdbc:mysql://mastacademy.ddns.net:1234/school?user=counselor&password=mastacademy");
+					.getConnection("jdbc:mysql://sampleschool.ddns.net:1234/school?user=counselor&password=samplePass");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

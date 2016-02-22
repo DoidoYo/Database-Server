@@ -53,25 +53,25 @@
 			<h2 class="welcome" > </h2>
 			<form>
 				<select class="change" id="10">
-					<option value="" disabled selected>Period 1</option>
+					<option value="null" disabled selected>Period 1</option>
 				</select>
 				<select class="change" id="11">
-					<option value="" disabled selected>Period 2</option>
+					<option value="null" disabled selected>Period 2</option>
 				</select>
 				<select class="change" id="12">
-					<option value="" disabled selected>Period 3</option>
+					<option value="null" disabled selected>Period 3</option>
 				</select>
 				<select class="change" id="13">
-					<option value="" disabled selected>Period 4</option>
+					<option value="null" disabled selected>Period 4</option>
 				</select>
 				<select class="change" id="14">
-					<option value="" disabled selected>Period 5</option>
+					<option value="null" disabled selected>Period 5</option>
 				</select>
 				<select class="change" id="15">
-					<option value="" disabled selected>Period 6</option>
+					<option value="null" disabled selected>Period 6</option>
 				</select>
 				<select class="change" id="16">
-					<option value="" disabled selected>Period 7</option>
+					<option value="null" disabled selected>Period 7</option>
 				</select>
 				
 				<button onclick="submitChange();return false;">Submit</button>
@@ -115,11 +115,11 @@ function start() {
 function submitChange() {
 var sub = true;
 	
-	$(".change").each(function() {
+	/*$(".change").each(function() {
 		if($(this).val() == null) {
 			sub = false;
 		}
-	});
+	});*/
 	
 	if(sub) {
 		//alert("Submitting Changes!");
@@ -178,7 +178,7 @@ function submitWanted() {
 		
 		//temp 
 		//start();
-		//location.reload();
+		location.reload();
 		
 	} else {
 		alert("Please Select A Class For Every Field")
@@ -296,7 +296,7 @@ $(".change").on('change', function() {
 	
 	for(var i =0;i<7;i++) {
 		pVal[i] = $("#1"+i).val();
-		$("#1"+i).empty().append('<option value="" disabled selected>Period '+ (i+1) + '</option>');
+		$("#1"+i).empty().append('<option value="null" disabled selected>Period '+ (i+1) + '</option>');
 	}
 	
 	for(var c=0;c<7;c++) {
