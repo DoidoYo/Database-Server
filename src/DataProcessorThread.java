@@ -293,7 +293,7 @@ public class DataProcessorThread extends Thread {
 					} 
 					//signup request
 					else if (action.request.contains("signup")) {
-
+						
 						String id, pass, first, last, grade, email;
 
 						//decode data

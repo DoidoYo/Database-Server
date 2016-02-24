@@ -143,12 +143,12 @@ var sub = true;
 			type:'get',
 			url: msg,
 			success: function(data) {
-				
+				location.reload();
 			}
 		});
 		
 		//logout (reload page) 
-		location.reload();
+		//location.reload();
 		
 	} else {
 		alert("Please Select A Class For Every Field")
@@ -185,12 +185,13 @@ function submitWanted() {
 			success: function(data) {
 				//reload 1/2 of page
 				start();
+				//location.reload();
 			}
 		});
 		
 		//temp 
 		//start();
-		location.reload();
+		//location.reload();
 		
 	} else {
 		alert("Please Select A Class For Every Field")
@@ -218,6 +219,9 @@ function change() {
 		type:'get',
 		url: "get=wantedclasses?" + id,
 		success: function(data) {
+			
+			//alert(data);
+			
 			//decode string from server into info
 			var c1=0,c2=0;
 			var mark=0;
@@ -274,6 +278,9 @@ function wanted() {
 		type:'get',
 		url: "get=classes",
 		success: function(data) {
+			
+			//alert(data);
+			
 			var classes = [];
 			for (var i=0;i<7;i++) {
 			     classes[i] = [];
